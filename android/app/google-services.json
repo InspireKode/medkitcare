@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "373967091252",
+    "project_id": "fir-app-4fb10",
+    "storage_bucket": "fir-app-4fb10.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:373967091252:android:25bbf7dc828a0a17ad3c61",
+        "android_client_info": {
+          "package_name": "com.example.amos_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "373967091252-nu917a24bj81ml67qtld6n3t5a5nppfo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDDEpfDCaAreWqWmbAYKSgtx56lkiGfXHc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "373967091252-nu917a24bj81ml67qtld6n3t5a5nppfo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:373967091252:android:07c32ada1dd20096ad3c61",
+        "android_client_info": {
+          "package_name": "com.example.medkitcare"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "373967091252-nu917a24bj81ml67qtld6n3t5a5nppfo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDDEpfDCaAreWqWmbAYKSgtx56lkiGfXHc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "373967091252-nu917a24bj81ml67qtld6n3t5a5nppfo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

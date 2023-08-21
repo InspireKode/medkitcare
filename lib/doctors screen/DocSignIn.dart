@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:medkitcare/styles/styles.dart';
@@ -14,10 +13,8 @@ class DocSignInPage extends StatefulWidget {
 }
 
 class _DocSignInPageState extends State<DocSignInPage> {
-  final _scaffoldKey = GlobalKey<ScaffoldMessengerState>();
   final _formKey = GlobalKey<FormState>();
 
-  late String _uid;
   late String title;
   late String email;
   late String password;
@@ -30,7 +27,7 @@ class _DocSignInPageState extends State<DocSignInPage> {
   final emailFocusNode = FocusNode();
   final pwdFocusNode = FocusNode();
 
-  void _OnSubmitFormDocSignIn(isLoggedIn) async {
+  void _OnSubmitFormDocSignIn() async {
     final isValid = _formKey.currentState!.validate();
     FocusScope.of(context).unfocus();
     if (isValid) {
@@ -41,7 +38,7 @@ class _DocSignInPageState extends State<DocSignInPage> {
         prefs.setBool('isLoggedIn', true);
 
         setState(() {
-          isLoggedIn = true;
+          isProcessing = true;
         });
         MyMessageHandler.showToast(
             Colors.greenAccent, 'successfully logged in', Colors.white);
@@ -109,7 +106,7 @@ class _DocSignInPageState extends State<DocSignInPage> {
                   },
                   focusNode: pwdFocusNode,
                   validator: (value) {
-                    if (value!.isEmpty || value!.contains('@')) {
+                    if (value!.isEmpty || !value.contains('@')) {
                       return "Invalid Email";
                     } else {
                       return null;
@@ -132,7 +129,7 @@ class _DocSignInPageState extends State<DocSignInPage> {
                   validator: (value) {
                     if (value!.length < 5) {
                       return "Password too weak ";
-                    } else if (value!.isEmpty) {
+                    } else if (value.isEmpty) {
                       return "Password can not be empty";
                     }
                     return null;
@@ -166,7 +163,7 @@ class _DocSignInPageState extends State<DocSignInPage> {
                   ),
                   child: Text('Sign in'),
                   onPressed: () {
-                    _OnSubmitFormDocSignIn(isProcessing);
+                    _OnSubmitFormDocSignIn();
                   },
                 ),
               ),

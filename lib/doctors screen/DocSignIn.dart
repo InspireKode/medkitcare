@@ -28,7 +28,7 @@ class _DocSignInPageState extends State<DocSignInPage> {
   final pwdFocusNode = FocusNode();
 
   void _OnSubmitFormDocSignIn() async {
-    final isValid = _formKey.currentState!.validate();
+    final isValid = _formKey.currentState?.validate() ?? false;
     FocusScope.of(context).unfocus();
     if (isValid) {
       try {
@@ -42,7 +42,7 @@ class _DocSignInPageState extends State<DocSignInPage> {
         });
         MyMessageHandler.showToast(
             Colors.greenAccent, 'successfully logged in', Colors.white);
-        _formKey.currentState!.reset();
+        _formKey.currentState?.reset();
 
         Navigator.pushReplacementNamed(context, '/DocHome');
       } on FirebaseAuthException catch (e) {

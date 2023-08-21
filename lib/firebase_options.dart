@@ -17,7 +17,10 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      return web;
+      throw UnsupportedError(
+        'DefaultFirebaseOptions have not been configured for web - '
+        'you can reconfigure this by running the FlutterFire CLI again.',
+      );
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -46,31 +49,21 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyDO8_TbqeUbuqExJyPuIb9MqZODKfzT4ho',
-    appId: '1:373967091252:web:dc4dc9fe078734b8ad3c61',
-    messagingSenderId: '373967091252',
-    projectId: 'fir-app-4fb10',
-    authDomain: 'fir-app-4fb10.firebaseapp.com',
-    storageBucket: 'fir-app-4fb10.appspot.com',
-    measurementId: 'G-V0663QLM9K',
-  );
-
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDDEpfDCaAreWqWmbAYKSgtx56lkiGfXHc',
-    appId: '1:373967091252:android:07c32ada1dd20096ad3c61',
-    messagingSenderId: '373967091252',
-    projectId: 'fir-app-4fb10',
-    storageBucket: 'fir-app-4fb10.appspot.com',
+    apiKey: 'AIzaSyDpmW8J4tPfD8Ixidn1n4upGrhxtOcJtQE',
+    appId: '1:1009749132549:android:095e870ed5511cd125236c',
+    messagingSenderId: '1009749132549',
+    projectId: 'inspire-med-64f84',
+    storageBucket: 'inspire-med-64f84.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyBmSN9N-TIn5bUIj143pZCwm8i0QsDEalo',
-    appId: '1:373967091252:ios:1a2e42d99ca13a61ad3c61',
-    messagingSenderId: '373967091252',
-    projectId: 'fir-app-4fb10',
-    storageBucket: 'fir-app-4fb10.appspot.com',
-    iosClientId: '373967091252-5k62fl1g9smmng8an1ik5okh08ul7c8s.apps.googleusercontent.com',
+    apiKey: 'AIzaSyCzVXrhxIWnthL79a8eZ_N8DzS6C4DTgYg',
+    appId: '1:1009749132549:ios:766195edff07c23625236c',
+    messagingSenderId: '1009749132549',
+    projectId: 'inspire-med-64f84',
+    storageBucket: 'inspire-med-64f84.appspot.com',
+    iosClientId: '1009749132549-k3aiofmbgn3rtv9icqnftq6cus3cef28.apps.googleusercontent.com',
     iosBundleId: 'com.example.medkitcare',
   );
 }

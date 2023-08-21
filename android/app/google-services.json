@@ -1,40 +1,40 @@
 {
   "project_info": {
-    "project_number": "373967091252",
-    "project_id": "fir-app-4fb10",
-    "storage_bucket": "fir-app-4fb10.appspot.com"
+    "project_number": "1009749132549",
+    "project_id": "inspire-med-64f84",
+    "storage_bucket": "inspire-med-64f84.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:373967091252:android:25bbf7dc828a0a17ad3c61",
+        "mobilesdk_app_id": "1:1009749132549:android:ea395e30bc9a97de25236c",
         "android_client_info": {
-          "package_name": "com.example.amos_app"
+          "package_name": "com.example.medkare_admin"
         }
       },
       "oauth_client": [
         {
-          "client_id": "373967091252-nu917a24bj81ml67qtld6n3t5a5nppfo.apps.googleusercontent.com",
+          "client_id": "1009749132549-jquhckr66325ho1kbt175gqoue567f7u.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDDEpfDCaAreWqWmbAYKSgtx56lkiGfXHc"
+          "current_key": "AIzaSyDpmW8J4tPfD8Ixidn1n4upGrhxtOcJtQE"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "373967091252-nu917a24bj81ml67qtld6n3t5a5nppfo.apps.googleusercontent.com",
+              "client_id": "1009749132549-jquhckr66325ho1kbt175gqoue567f7u.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "373967091252-5k62fl1g9smmng8an1ik5okh08ul7c8s.apps.googleusercontent.com",
+              "client_id": "1009749132549-gkba2idge5gob242omj1dce5lbsdc7pm.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.example.medkitcare"
+                "bundle_id": "com.example.medkareAdmin"
               }
             }
           ]
@@ -43,34 +43,34 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:373967091252:android:07c32ada1dd20096ad3c61",
+        "mobilesdk_app_id": "1:1009749132549:android:095e870ed5511cd125236c",
         "android_client_info": {
           "package_name": "com.example.medkitcare"
         }
       },
       "oauth_client": [
         {
-          "client_id": "373967091252-nu917a24bj81ml67qtld6n3t5a5nppfo.apps.googleusercontent.com",
+          "client_id": "1009749132549-jquhckr66325ho1kbt175gqoue567f7u.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDDEpfDCaAreWqWmbAYKSgtx56lkiGfXHc"
+          "current_key": "AIzaSyDpmW8J4tPfD8Ixidn1n4upGrhxtOcJtQE"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "373967091252-nu917a24bj81ml67qtld6n3t5a5nppfo.apps.googleusercontent.com",
+              "client_id": "1009749132549-jquhckr66325ho1kbt175gqoue567f7u.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "373967091252-5k62fl1g9smmng8an1ik5okh08ul7c8s.apps.googleusercontent.com",
+              "client_id": "1009749132549-gkba2idge5gob242omj1dce5lbsdc7pm.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.example.medkitcare"
+                "bundle_id": "com.example.medkareAdmin"
               }
             }
           ]

@@ -28,17 +28,17 @@ class _SigninPageState extends State<SigninPage> {
   final pwdFocusNode = FocusNode();
 
   void _OnSubmitFormSignIn(isLoggedIn) async {
-    print("Emmanuelbefore formkey: ${_formkey.currentState}");
-    // final isValid = _formKey.currentState!.validate();
+    // print("Emmanuelbefore formkey: ${_formkey.currentState}");
+    final isValid = _formKey.currentState!.validate();
     FocusScope.of(context).unfocus();
     if (true) {
       try {
-        print("Emmanuelbeforefirebase: ${_formkey.currentState}");
+        // print("Emmanuelbeforefirebase: ${_formkey.currentState}");
         await FirebaseAuth.instance
             .signInWithEmailAndPassword(email: email, password: password);
-        print("Emmanuelsharedpreference: ${_formkey.currentState}");
+        // print("Emmanuelsharedpreference: ${_formkey.currentState}");
         SharedPreferences prefs = await SharedPreferences.getInstance();
-        print("Emmanuelaftersharedpreference: ${_formkey.currentState}");
+        // print("Emmanuelaftersharedpreference: ${_formkey.currentState}");
         prefs.setBool('isLoggedIn', true);
 
         setState(() {

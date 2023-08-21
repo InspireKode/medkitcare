@@ -28,10 +28,12 @@ List<Map> doctors = [
 
 class HomeTab extends StatelessWidget {
   final void Function() onPressedScheduleCard;
+  final bool actAsDoctor;
 
   const HomeTab({
     Key? key,
     required this.onPressedScheduleCard,
+    required this.actAsDoctor
   }) : super(key: key);
 
   @override
@@ -76,7 +78,7 @@ class HomeTab extends StatelessWidget {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const OpenSchedule(allowBooking: true,)));
+                            builder: (context) =>  OpenSchedule(allowBooking: !actAsDoctor,)));
                   },
                 )
               ],

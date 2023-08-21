@@ -178,6 +178,7 @@ class _ScheduleTabState extends State<ScheduleTab> {
                                 SizedBox(
                                   height: 15,
                                 ),
+                                if (status == FilterStatus.Pending)
                                 Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,

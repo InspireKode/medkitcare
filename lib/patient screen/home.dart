@@ -30,6 +30,7 @@ class _HomeState extends State<Home> {
     List<Widget> screens = [
       HomeTab(
         onPressedScheduleCard: goToSchedule,
+        actAsDoctor: false,
       ),
       ScheduleTab(),
       Profile()

@@ -31,6 +31,7 @@ class _DocHomeState extends State<DocHome> {
     List<Widget> screens = [
       HomeTab(
         onPressedScheduleCard: goToSchedule,
+        actAsDoctor: true,
       ),
       const ScheduleTab(allowApproval: true,),
       Profile()

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:medkitcare/patient%20screen/open_schedule.dart';
 import 'package:medkitcare/styles/colors.dart';
 import 'package:medkitcare/styles/styles.dart';
 
@@ -71,7 +72,12 @@ class HomeTab extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const OpenSchedule(allowBooking: true,)));
+                  },
                 )
               ],
             ),

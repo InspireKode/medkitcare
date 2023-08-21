@@ -13,7 +13,6 @@ class DocSignInPage extends StatefulWidget {
 }
 
 class _DocSignInPageState extends State<DocSignInPage> {
-  final _formKey = GlobalKey<FormState>();
 
   late String title;
   late String email;
@@ -22,7 +21,7 @@ class _DocSignInPageState extends State<DocSignInPage> {
   late String lname;
   bool isProcessing = false;
 
-  final _formkey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
   bool isSelected = false;
   final emailFocusNode = FocusNode();
   final pwdFocusNode = FocusNode();
@@ -43,6 +42,7 @@ class _DocSignInPageState extends State<DocSignInPage> {
         MyMessageHandler.showToast(
             Colors.greenAccent, 'successfully logged in', Colors.white);
         _formKey.currentState?.reset();
+
 
         Navigator.pushReplacementNamed(context, '/DocHome');
       } on FirebaseAuthException catch (e) {
@@ -80,7 +80,7 @@ class _DocSignInPageState extends State<DocSignInPage> {
       body: SingleChildScrollView(
         child: SafeArea(
             child: Form(
-          key: _formkey,
+          key: _formKey,
           child: Column(
             children: [
               Padding(

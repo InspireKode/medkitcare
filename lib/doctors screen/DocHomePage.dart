@@ -3,6 +3,8 @@ import 'package:medkitcare/styles/colors.dart';
 import 'package:medkitcare/tabs/HomeTab.dart';
 import 'package:medkitcare/tabs/ScheduleTab.dart';
 
+import '../profile.dart';
+
 class DocHome extends StatefulWidget {
   const DocHome({Key? key}) : super(key: key);
 
@@ -30,7 +32,8 @@ class _DocHomeState extends State<DocHome> {
       HomeTab(
         onPressedScheduleCard: goToSchedule,
       ),
-      ScheduleTab(),
+      const ScheduleTab(allowApproval: true,),
+      Profile()
     ];
 
     return Scaffold(

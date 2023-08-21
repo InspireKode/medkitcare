@@ -1,77 +1,29 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:medkitcare/styles/colors.dart';
 import 'package:medkitcare/styles/styles.dart';
 
 class ScheduleTab extends StatefulWidget {
-  const ScheduleTab({Key? key}) : super(key: key);
+  const ScheduleTab({this.allowApproval = false, Key? key}) : super(key: key);
+
+  final bool allowApproval;
 
   @override
   State<ScheduleTab> createState() => _ScheduleTabState();
 }
 
-enum FilterStatus { Upcoming, Completed, Cancelled }
-
-List<Map> schedules = [
-  {
-    'img': 'assets/doctor01.jpeg',
-    'doctorName': 'Dr. Anastasya Syahid',
-    'doctorTitle': 'Dental Specialist',
-    'reservedDate': 'Monday, Aug 29',
-    'reservedTime': '11:00 - 12:00',
-    'status': FilterStatus.Upcoming
-  },
-  {
-    'img': 'assets/doctor02.png',
-    'doctorName': 'Dr. Mauldya Imran',
-    'doctorTitle': 'Skin Specialist',
-    'reservedDate': 'Monday, Sep 29',
-    'reservedTime': '11:00 - 12:00',
-    'status': FilterStatus.Upcoming
-  },
-  {
-    'img': 'assets/doctor03.jpeg',
-    'doctorName': 'Dr. Rihanna Garland',
-    'doctorTitle': 'General Specialist',
-    'reservedDate': 'Monday, Jul 29',
-    'reservedTime': '11:00 - 12:00',
-    'status': FilterStatus.Upcoming
-  },
-  {
-    'img': 'assets/doctor04.jpeg',
-    'doctorName': 'Dr. John Doe',
-    'doctorTitle': 'Something Specialist',
-    'reservedDate': 'Monday, Jul 29',
-    'reservedTime': '11:00 - 12:00',
-    'status': FilterStatus.Completed
-  },
-  {
-    'img': 'assets/doctor05.jpeg',
-    'doctorName': 'Dr. Sam Smithh',
-    'doctorTitle': 'Other Specialist',
-    'reservedDate': 'Monday, Jul 29',
-    'reservedTime': '11:00 - 12:00',
-    'status': FilterStatus.Cancelled
-  },
-  {
-    'img': 'assets/doctor05.jpeg',
-    'doctorName': 'Dr. Sam Smithh',
-    'doctorTitle': 'Other Specialist',
-    'reservedDate': 'Monday, Jul 29',
-    'reservedTime': '11:00 - 12:00',
-    'status': FilterStatus.Cancelled
-  },
-];
+enum FilterStatus {
+  Pending,
+  Approved,
+}
 
 class _ScheduleTabState extends State<ScheduleTab> {
-  FilterStatus status = FilterStatus.Upcoming;
+  FilterStatus status = FilterStatus.Pending;
   Alignment _alignment = Alignment.centerLeft;
 
   @override
   Widget build(BuildContext context) {
-    List<Map> filteredSchedules = schedules.where((var schedule) {
-      return schedule['status'] == status;
-    }).toList();
-
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.only(left: 30, top: 30, right: 30),
@@ -103,16 +55,12 @@ class _ScheduleTabState extends State<ScheduleTab> {
                           child: GestureDetector(
                             onTap: () {
                               setState(() {
-                                if (filterStatus == FilterStatus.Upcoming) {
-                                  status = FilterStatus.Upcoming;
+                                if (filterStatus == FilterStatus.Pending) {
+                                  status = FilterStatus.Pending;
                                   _alignment = Alignment.centerLeft;
                                 } else if (filterStatus ==
-                                    FilterStatus.Completed) {
-                                  status = FilterStatus.Completed;
-                                  _alignment = Alignment.center;
-                                } else if (filterStatus ==
-                                    FilterStatus.Cancelled) {
-                                  status = FilterStatus.Cancelled;
+                                    FilterStatus.Approved) {
+                                  status = FilterStatus.Approved;
                                   _alignment = Alignment.centerRight;
                                 }
                               });
@@ -132,7 +80,7 @@ class _ScheduleTabState extends State<ScheduleTab> {
                   duration: Duration(milliseconds: 200),
                   alignment: _alignment,
                   child: Container(
-                    width: 100,
+                    width: 120,
                     height: 40,
                     decoration: BoxDecoration(
                       color: Color(MyColors.primary),
@@ -155,91 +103,144 @@ class _ScheduleTabState extends State<ScheduleTab> {
               height: 20,
             ),
             Expanded(
-              child: ListView.builder(
-                itemCount: filteredSchedules.length,
-                itemBuilder: (context, index) {
-                  var _schedule = filteredSchedules[index];
-                  bool isLastElement = filteredSchedules.length + 1 == index;
-                  return Card(
-                    margin: !isLastElement
-                        ? EdgeInsets.only(bottom: 20)
-                        : EdgeInsets.zero,
-                    child: Padding(
-                      padding: EdgeInsets.all(15),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          Row(
-                            children: [
-                              CircleAvatar(
-                                backgroundImage: AssetImage(_schedule['img']),
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    _schedule['doctorName'],
-                                    style: TextStyle(
-                                      color: Color(MyColors.header01),
-                                      fontWeight: FontWeight.w700,
+              child: StreamBuilder(
+                stream: status == FilterStatus.Pending
+                    ? FirebaseFirestore.instance
+                        .collection("schedule")
+                        .where("reserved", isEqualTo: true)
+                        .where("approved", isEqualTo: false)
+                        .snapshots()
+                    : FirebaseFirestore.instance
+                        .collection("schedule")
+                        .where("approved", isEqualTo: true)
+                        .snapshots(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    final data = snapshot.data?.docs ?? [];
+
+                    if (data.length == 0) {
+                      return const Center(child: Text("Nothing at the moment"));
+                    }
+
+                    return ListView.builder(
+                      itemCount: data.length,
+                      itemBuilder: (context, index) {
+                        var _schedule = List.from(data)[index];
+                        bool isLastElement = data.length + 1 == index;
+                        return Card(
+                          margin: !isLastElement
+                              ? EdgeInsets.only(bottom: 20)
+                              : EdgeInsets.zero,
+                          child: Padding(
+                            padding: EdgeInsets.all(15),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                Row(
+                                  children: [
+                                    Icon(Icons.person),
+                                    SizedBox(
+                                      width: 10,
                                     ),
-                                  ),
-                                  SizedBox(
-                                    height: 5,
-                                  ),
-                                  Text(
-                                    _schedule['doctorTitle'],
-                                    style: TextStyle(
-                                      color: Color(MyColors.grey02),
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w600,
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          _schedule['doctor_name'],
+                                          style: TextStyle(
+                                            color: Color(MyColors.header01),
+                                            fontWeight: FontWeight.w700,
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: 5,
+                                        ),
+                                        Text(
+                                          "Doctor",
+                                          style: TextStyle(
+                                            color: Color(MyColors.grey02),
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 15,
-                          ),
-                          DateTimeCard(),
-                          SizedBox(
-                            height: 15,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Expanded(
-                                child: OutlinedButton(
-                                  child: Text(
-                                    'Cancel',
-                                    style: TextStyle(color: Color(MyColors.bg)),
-                                  ),
-                                  onPressed: () {},
+                                  ],
                                 ),
-                              ),
-                              SizedBox(
-                                width: 20,
-                              ),
-                              Expanded(
-                                child: MaterialButton(
-                                  color: Color(MyColors.bg),
-                                  child: Text(
-                                    'Reschedule',
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                  onPressed: () => {},
+                                SizedBox(
+                                  height: 15,
                                 ),
-                              )
-                            ],
-                          )
-                        ],
-                      ),
-                    ),
-                  );
+                                DateTimeCard(
+                                  date: DateTime.tryParse(_schedule["date"]) ??
+                                      DateTime.now(),
+                                ),
+                                SizedBox(
+                                  height: 15,
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Expanded(
+                                      child: OutlinedButton(
+                                        child: Text(
+                                          'Cancel',
+                                          style: TextStyle(
+                                              color: Color(MyColors.bg)),
+                                        ),
+                                        onPressed: () {
+                                          FirebaseFirestore.instance
+                                              .collection("schedule")
+                                              .doc(_schedule.id)
+                                              .set({
+                                            "approved": false,
+                                            "reserved": false
+                                          }, SetOptions(merge: true));
+                                        },
+                                      ),
+                                    ),
+                                    if (widget.allowApproval) ...[
+                                      SizedBox(
+                                        width: 20,
+                                      ),
+                                      Expanded(
+                                        child: MaterialButton(
+                                          color: Color(MyColors.bg),
+                                          child: Text(
+                                            'Approve',
+                                            style:
+                                                TextStyle(color: Colors.white),
+                                          ),
+                                          onPressed: () {
+                                            FirebaseFirestore.instance
+                                                .collection("schedule")
+                                                .doc(_schedule.id)
+                                                .set({
+                                              "approved": true,
+                                              "reserved": true
+                                            }, SetOptions(merge: true));
+                                          },
+                                        ),
+                                      )
+                                    ]
+                                  ],
+                                )
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    );
+                  }
+
+                  if (snapshot.hasError) {
+                    return const Center(
+                      child: Text("An error occurred"),
+                    );
+                  }
+
+                  return const Center(child: CircularProgressIndicator());
                 },
               ),
             )
@@ -252,8 +253,13 @@ class _ScheduleTabState extends State<ScheduleTab> {
 
 class DateTimeCard extends StatelessWidget {
   const DateTimeCard({
+    required this.date,
+    this.period = "Morning",
     Key? key,
   }) : super(key: key);
+
+  final DateTime date;
+  final String period;
 
   @override
   Widget build(BuildContext context) {
@@ -279,7 +285,7 @@ class DateTimeCard extends StatelessWidget {
                 width: 5,
               ),
               Text(
-                'Fri, Aug 19',
+                DateFormat("yMMMd").format(date),
                 style: TextStyle(
                   fontSize: 12,
                   color: Color(MyColors.primary),
@@ -299,7 +305,7 @@ class DateTimeCard extends StatelessWidget {
                 width: 5,
               ),
               Text(
-                '11:00 ~ 12:10',
+                period,
                 style: TextStyle(
                   color: Color(MyColors.primary),
                   fontWeight: FontWeight.bold,

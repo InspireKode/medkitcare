@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:medkitcare/profile.dart';
 import 'package:medkitcare/styles/colors.dart';
 import 'package:medkitcare/tabs/HomeTab.dart';
 import 'package:medkitcare/tabs/ScheduleTab.dart';
@@ -31,6 +32,7 @@ class _HomeState extends State<Home> {
         onPressedScheduleCard: goToSchedule,
       ),
       ScheduleTab(),
+      Profile()
     ];
 
     return Scaffold(

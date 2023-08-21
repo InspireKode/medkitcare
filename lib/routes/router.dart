@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:medkitcare/doctors%20screen/DocHomePage.dart';
 import 'package:medkitcare/doctors%20screen/DocSignIn.dart';
 import 'package:medkitcare/doctors%20screen/approve_schedule.dart';
 import 'package:medkitcare/patient%20screen/Splashscreen.dart';
@@ -7,6 +8,7 @@ import 'package:medkitcare/patient%20screen/forget_password.dart';
 import 'package:medkitcare/patient%20screen/home.dart';
 import 'package:medkitcare/patient%20screen/login_option.dart';
 import 'package:medkitcare/doctors%20screen/DocSignUp.dart';
+import 'package:medkitcare/patient%20screen/open_schedule.dart';
 import 'package:medkitcare/patient%20screen/signin.dart';
 import 'package:medkitcare/patient%20screen/signup.dart';
 import 'package:medkitcare/patient%20screen/slideshow/silde1.dart';
@@ -24,7 +26,7 @@ Map<String, Widget Function(BuildContext)> routes = {
   '/options': (context) => Loginoption(),
   '/detail': (context) => SliverDoctorDetail(),
   '/home': (context) => Home(),
-  '/DocHome': (context) => Home(),
+  '/DocHome': (context) => DocHome(),
   // '/DocApprove': (context) => DoctorApp(doctorName: '', appointments: [],),
   '/profile': (context) => UserProfileScreen(),
   '/pwd_reset': (context) => ForgotPasswordPage(),
@@ -32,4 +34,5 @@ Map<String, Widget Function(BuildContext)> routes = {
   '/2': (context) => Slide2(),
   '/3': (context) => Slide3(),
   '/4': (context) => Slide4(),
+  OpenSchedule.uri: (context) => const OpenSchedule()
 };

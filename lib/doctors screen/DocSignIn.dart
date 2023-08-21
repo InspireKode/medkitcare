@@ -44,7 +44,7 @@ class _DocSignInPageState extends State<DocSignInPage> {
             Colors.greenAccent, 'successfully logged in', Colors.white);
         _formKey.currentState!.reset();
 
-        Navigator.pushReplacementNamed(context, '/home');
+        Navigator.pushReplacementNamed(context, '/DocHome');
       } on FirebaseAuthException catch (e) {
         if (e.code == 'user-not-found') {
           setState(() {
@@ -190,7 +190,7 @@ class _DocSignInPageState extends State<DocSignInPage> {
                             style: PoppinsStyle,
                           ),
                           onPressed: () {
-                            Navigator.pushNamed(context, '/#');
+                            Navigator.pushNamed(context, '/DocSignUp');
                           },
                         )
                       ],

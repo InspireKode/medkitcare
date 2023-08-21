@@ -104,7 +104,7 @@ class _LoginoptionState extends State<Loginoption> {
               Container(
                 child: MaterialButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, '/.');
+                    Navigator.pushNamed(context, '/SignIn');
                   },
                   child: Text(
                     'Continue',

@@ -312,7 +312,7 @@ class _DocSignUpPageState extends State<DocSignUpPage> {
                         style: PoppinsStyle,
                       ),
                       onPressed: () {
-                        Navigator.pushNamed(context, "/.");
+                        Navigator.pushNamed(context, "/DocSignIn");
                       },
                     )
                   ],

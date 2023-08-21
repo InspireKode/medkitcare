@@ -17,13 +17,14 @@ import 'package:medkitcare/tabs/Profile.dart';
 
 Map<String, Widget Function(BuildContext)> routes = {
   '/': (context) => SplashScreen(),
-  '/.': (context) => SigninPage(),
-  '/*': (context) => SignUpPage(),
-  '/#': (context) => DocSignUpPage(),
+  '/SignIn': (context) => SigninPage(),
+  '/SignUp': (context) => SignUpPage(),
+  '/DocSignUp': (context) => DocSignUpPage(),
   '/DocSignIn': (context) => DocSignInPage(),
   '/options': (context) => Loginoption(),
   '/detail': (context) => SliverDoctorDetail(),
   '/home': (context) => Home(),
+  '/DocHome': (context) => Home(),
   // '/DocApprove': (context) => DoctorApp(doctorName: '', appointments: [],),
   '/profile': (context) => UserProfileScreen(),
   '/pwd_reset': (context) => ForgotPasswordPage(),

@@ -1,11 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:medkitcare/styles/styles.dart';
+import 'package:medkitcare/widget/snackbar.dart';
 
 import '../styles/colors.dart';
-import '../widget/snackbar.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
@@ -15,23 +14,31 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
-  final _formKey = GlobalKey<FormState>();
-  CollectionReference patients =
-      FirebaseFirestore.instance.collection('patients');
+  CollectionReference patient =
+      FirebaseFirestore.instance.collection('patient');
   late String _uid;
+  late String title;
   late String email;
   late String password;
   late String fname;
   late String lname;
   late String address;
+
   bool isProcessing = false;
   final _formkey = GlobalKey<FormState>();
   bool isSelected = false;
-
-  final _lastNameFocusNode = FocusNode();
+  final TitleCTR = TextEditingController();
+  final TitleFocusNode = FocusNode();
+  final FirstNameCTR = TextEditingController();
+  final FirstNameFocusNode = FocusNode();
+  final LastNameCTR = TextEditingController();
+  final LastNameFocusNode = FocusNode();
+  final emailCTR = TextEditingController();
+  final pwdCTR = TextEditingController();
   final emailFocusNode = FocusNode();
   final pwdFocusNode = FocusNode();
-  final _addressFocusNode = FocusNode();
+  final AddressCTR = TextEditingController();
+  final AddressFocusNode = FocusNode();
   void _onSubmitSignUp() async {
     final isValid = _formkey.currentState!.validate();
     FocusScope.of(context).unfocus();
@@ -42,17 +49,16 @@ class _SignUpPageState extends State<SignUpPage> {
 
         _uid = FirebaseAuth.instance.currentUser!.uid;
 
-        await patients.doc(_uid).set({
+        await patient.doc(_uid).set({
           'fname': fname,
           'lname': lname,
           'email': email,
           'address': '',
           'patientid': _uid,
         });
-        MyMessageHandler.showToast(
-            Colors.greenAccent, 'successful.', Colors.white);
-        _formKey.currentState!.reset();
-        Navigator.pushNamed(context, "/.");
+
+        _formkey.currentState!.reset();
+        Navigator.pushNamed(context, "/SignIn");
       } on FirebaseAuthException catch (e) {
         if (e.code == 'weak-password') {
           setState(() {
@@ -103,23 +109,23 @@ class _SignUpPageState extends State<SignUpPage> {
               ),
               Text(
                 'MedKare',
-                style: PoppinsTitle,
-              ),
-              SizedBox(
-                height: 10,
+                style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 24,
+                    color: Color(MyColors.primary)),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                 child: TextFormField(
                   onChanged: (value) {
                     fname = (value);
                   },
-                  textInputAction: TextInputAction.next,
-                  onEditingComplete: () =>
-                      FocusScope.of(context).requestFocus(_lastNameFocusNode),
+                  controller: FirstNameCTR,
+                  focusNode: LastNameFocusNode,
                   validator: (value) {
                     if (value!.isEmpty || value.length <= 3) {
-                      return "Invalid input";
+                      return "Invalid First name";
                     } else {
                       return null;
                     }
@@ -138,13 +144,11 @@ class _SignUpPageState extends State<SignUpPage> {
                   onChanged: (value) {
                     lname = (value);
                   },
-                  focusNode: _lastNameFocusNode,
-                  textInputAction: TextInputAction.next,
-                  onEditingComplete: () =>
-                      FocusScope.of(context).requestFocus(emailFocusNode),
+                  controller: LastNameCTR,
+                  focusNode: emailFocusNode,
                   validator: (value) {
                     if (value!.isEmpty || value.length <= 3) {
-                      return "Invalid input";
+                      return "Invalid Last name";
                     } else {
                       return null;
                     }
@@ -163,10 +167,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   onChanged: (value) {
                     email = (value);
                   },
-                  focusNode: emailFocusNode,
-                  textInputAction: TextInputAction.next,
-                  onEditingComplete: () =>
-                      FocusScope.of(context).requestFocus(_addressFocusNode),
+                  focusNode: AddressFocusNode,
                   validator: (value) {
                     if (value!.isEmpty || !value.contains('@')) {
                       return "Invalid Email";
@@ -188,12 +189,10 @@ class _SignUpPageState extends State<SignUpPage> {
                   onChanged: (value) {
                     address = (value);
                   },
-                  focusNode: _addressFocusNode,
-                  textInputAction: TextInputAction.next,
-                  onEditingComplete: () =>
-                      FocusScope.of(context).requestFocus(pwdFocusNode),
+                  controller: AddressCTR,
+                  focusNode: pwdFocusNode,
                   validator: (value) {
-                    if (value!.isEmpty || value.length <= 3) {
+                    if (value!.isEmpty || value.length <= 5) {
                       return "Invalid Address";
                     } else {
                       return null;
@@ -213,9 +212,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   onChanged: (value) {
                     password = (value);
                   },
-                  focusNode: pwdFocusNode,
-                  textInputAction: TextInputAction.done,
-                  onEditingComplete: _onSubmitSignUp,
+                  controller: pwdCTR,
                   validator: (value) {
                     if (value!.length < 5) {
                       return "Password too weak ";
@@ -251,11 +248,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         Color(MyColors.primary),
                       ),
                     ),
-                    child: Text(
-                      'Sign up',
-                      style: TextStyle(
-                          fontFamily: GoogleFonts.poppins().fontFamily),
-                    ),
+                    child: Text('Sign up'),
                     onPressed: () {
                       _onSubmitSignUp();
                     }),
@@ -263,7 +256,7 @@ class _SignUpPageState extends State<SignUpPage> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 15),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     TextButton(
                       child: Text(
@@ -271,7 +264,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         style: PoppinsStyle,
                       ),
                       onPressed: () {
-                        Navigator.pushNamed(context, '/.');
+                        Navigator.pushNamed(context, "/SignIn");
                       },
                     )
                   ],

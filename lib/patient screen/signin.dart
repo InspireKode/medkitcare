@@ -31,7 +31,7 @@ class _SigninPageState extends State<SigninPage> {
     // print("Emmanuelbefore formkey: ${_formkey.currentState}");
     final isValid = _formKey.currentState!.validate();
     FocusScope.of(context).unfocus();
-    if (true) {
+    if (isValid) {
       try {
         // print("Emmanuelbeforefirebase: ${_formkey.currentState}");
         await FirebaseAuth.instance
@@ -194,7 +194,7 @@ class _SigninPageState extends State<SigninPage> {
                             style: PoppinsStyle,
                           ),
                           onPressed: () {
-                            Navigator.pushNamed(context, '/*');
+                            Navigator.pushNamed(context, '/SignUp');
                           },
                         )
                       ],

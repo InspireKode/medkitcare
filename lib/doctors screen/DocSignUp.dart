@@ -60,7 +60,7 @@ class _DocSignUpPageState extends State<DocSignUpPage> {
         });
 
         _formkey.currentState!.reset();
-        Navigator.pushNamed(context, "/.");
+        Navigator.pushNamed(context, "/DocSignIn");
       } on FirebaseAuthException catch (e) {
         if (e.code == 'weak-password') {
           setState(() {
@@ -133,7 +133,7 @@ class _DocSignUpPageState extends State<DocSignUpPage> {
                     }
                   },
                   decoration: InputDecoration(
-                      hintText: 'First name',
+                      hintText: 'Title',
                       // suffixIcon: Icon(Icons.local_hospital),
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(15))),
@@ -192,10 +192,9 @@ class _DocSignUpPageState extends State<DocSignUpPage> {
                   onChanged: (value) {
                     email = (value);
                   },
-                  controller: emailCTR,
                   focusNode: SpecialtyFocusNode,
                   validator: (value) {
-                    if (value!.isEmpty || value.contains('@')) {
+                    if (value!.isEmpty || !value.contains('@')) {
                       return "Invalid Email";
                     } else {
                       return null;

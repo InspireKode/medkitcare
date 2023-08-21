@@ -29,6 +29,13 @@
             {
               "client_id": "373967091252-nu917a24bj81ml67qtld6n3t5a5nppfo.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "373967091252-5k62fl1g9smmng8an1ik5okh08ul7c8s.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.medkitcare"
+              }
             }
           ]
         }
@@ -58,6 +65,13 @@
             {
               "client_id": "373967091252-nu917a24bj81ml67qtld6n3t5a5nppfo.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "373967091252-5k62fl1g9smmng8an1ik5okh08ul7c8s.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.medkitcare"
+              }
             }
           ]
         }

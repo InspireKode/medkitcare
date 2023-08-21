@@ -29,7 +29,7 @@ class _SigninPageState extends State<SigninPage> {
 
   void _OnSubmitFormSignIn(isLoggedIn) async {
     // print("Emmanuelbefore formkey: ${_formkey.currentState}");
-    final isValid = _formKey.currentState!.validate();
+    final isValid = _formkey.currentState?.validate() ?? false;
     FocusScope.of(context).unfocus();
     if (isValid) {
       try {
@@ -38,16 +38,16 @@ class _SigninPageState extends State<SigninPage> {
             .signInWithEmailAndPassword(email: email, password: password);
         // print("Emmanuelsharedpreference: ${_formkey.currentState}");
         SharedPreferences prefs = await SharedPreferences.getInstance();
-        // print("Emmanuelaftersharedpreference: ${_formkey.currentState}");
+        // // print("Emmanuelaftersharedpreference: ${_formkey.currentState}");
         prefs.setBool('isLoggedIn', true);
-
+        print('Gods hand');
         setState(() {
           isLoggedIn = true;
         });
         MyMessageHandler.showToast(
             Colors.greenAccent, 'successfully logged in', Colors.white);
-        _formKey.currentState!.reset();
-
+        _formKey.currentState?.reset();
+        print('Gods fear');
         Navigator.pushReplacementNamed(context, '/home');
       } on FirebaseAuthException catch (e) {
         if (e.code == 'user-not-found') {
